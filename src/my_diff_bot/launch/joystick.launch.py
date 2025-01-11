@@ -1,5 +1,6 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
+from launch.actions import Shutdown
 
 import os
 from ament_index_python.packages import get_package_share_directory
@@ -19,7 +20,8 @@ def generate_launch_description():
             executable='teleop_node',
             name = 'teleop_node',
             parameters=[joy_params],
-            remappings=[('/cmd_vel', '/diff_cont/cmd_vel_unstamped')]
+            remappings=[('/cmd_vel', '/diff_cont/cmd_vel_unstamped')],
+            on_exit=[Shutdown()]
             )
 
     return LaunchDescription([

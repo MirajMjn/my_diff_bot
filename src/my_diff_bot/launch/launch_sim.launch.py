@@ -5,6 +5,7 @@ from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, Regi
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
+from launch.actions import Shutdown
 from launch.event_handlers import OnProcessExit
 
 import xacro
@@ -18,6 +19,8 @@ def generate_launch_description():
     xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
     robot_description_config = xacro.process_file(xacro_file)
     params = {'robot_description': robot_description_config.toxml()}
+
+    rviz_config = os.path.join(get_package_share_directory(package_name), 'config', 'view_bot.rviz')
 
     bridge_params = os.path.join(get_package_share_directory(package_name), 'config', 'gz_bridge.yaml')
     ros_gz_bridge = Node(
@@ -47,12 +50,14 @@ def generate_launch_description():
         executable="robot_state_publisher",
         output="both",
         parameters=[params],
+        on_exit=[Shutdown()]
     )
 
     rviz_node= Node(
         package="rviz2",
         executable="rviz2",
-        # arguments=['-d', rviz_config]
+        arguments=['-d', rviz_config],
+        on_exit=[Shutdown()]
     )
 
     # joint_broad_spawner = Node(
@@ -84,7 +89,7 @@ def generate_launch_description():
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py'
-        )]), launch_arguments={'gz_args': ['-r -v10 ', world], 'on_exit_shutdown': 'true'}.items()
+        )]), launch_arguments={'gz_args': ['-r -v4 ', world], 'on_exit_shutdown': 'true'}.items()
     )
 
     spawn_entity = Node(package='ros_gz_sim', executable='create',
