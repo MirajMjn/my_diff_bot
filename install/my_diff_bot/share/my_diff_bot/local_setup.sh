@@ -1,0 +1,1 @@
+/home/mizbot/my_ros_ws/diff_bot_ws/build/my_diff_bot/ament_cmake_environment_hooks/local_setup.sh

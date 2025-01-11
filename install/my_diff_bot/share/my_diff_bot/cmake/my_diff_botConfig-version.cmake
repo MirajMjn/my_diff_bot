@@ -1,0 +1,1 @@
+/home/mizbot/my_ros_ws/diff_bot_ws/build/my_diff_bot/ament_cmake_core/my_diff_botConfig-version.cmake
