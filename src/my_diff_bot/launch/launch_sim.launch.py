@@ -98,11 +98,11 @@ def generate_launch_description():
                                    '-z', '0.1'],
                         output='screen')
     
-    joystick = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([os.path.join(
-            get_package_share_directory(package_name), 'launch', 'joystick.launch.py'
-        )]), launch_arguments={'use_sim_time': 'true'}.items()
-    )
+    # joystick = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([os.path.join(
+    #         get_package_share_directory(package_name), 'launch', 'joystick.launch.py'
+    #     )]), launch_arguments={'use_sim_time': 'true'}.items()
+    # )
 
     # # Delay rviz start after `joint_state_broadcaster`
     # delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
@@ -134,7 +134,7 @@ def generate_launch_description():
         world_arg,
         gazebo,
         spawn_entity,
-        joystick,
+        # joystick,
         # diff_cont_spawner,
         # joint_broad_spawner,
         # delay_joint_state_broadcaster_after_robot_controller_spawner,
